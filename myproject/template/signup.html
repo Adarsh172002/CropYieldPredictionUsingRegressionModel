@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+    body {
+        background-image: url("https://i0.wp.com/tutvid.com/wp-content/uploads/2013/05/050113-01.jpg?resize=700%2C500");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.5); /* Adjust the opacity here */
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    h2 {
+        color: maroon;
+        text-align: center;
+        font-weight: bold;
+    }
+    .form-group{
+        text-align: center;
+        color: brown;
+        font-weight: bold;
+    }
+    h5{
+      margin-top: 5%;
+    }
+    .form-control{
+      width: 400px;
+      margin: 0 auto;
+    }
+    
+</style>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Signup</h2>
+                        <div id="error_message" class="text-danger"></div>
+                        <form id="signup_form" method="post" onsubmit="return validateForm()">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username (Max 15 characters)" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password (Min 8 characters)" required>
+                                <div id="password_strength" class="mt-2"></div> <!-- Display password strength here -->
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+                                <div id="password_match_message" class="text-danger"></div> <!-- Display password match message here -->
+                            </div>
+                            <div class="text-center">
+                            <button type="submit" class="btn btn-outline-primary">SIGN-UP</button>
+                            </div>
+                            <div class="text-center">
+                                <h5>Already Have Account
+                                <a href="{% url 'login' %}">
+                                    <button type="button" class="btn btn-outline-danger">LOGIN</button>
+                                </a>
+                                </h5>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to calculate password strength
+        function calculatePasswordStrength(password) {
+            // Regular expressions to check for presence of different character types
+            var lowercaseRegex = /[a-z]/;
+            var uppercaseRegex = /[A-Z]/;
+            var digitRegex = /\d/;
+            var specialCharRegex = /[^a-zA-Z\d\s]/;
+    
+            // Calculate password strength based on presence of different character types
+            var strength = 0;
+            if (lowercaseRegex.test(password)) strength++;
+            if (uppercaseRegex.test(password)) strength++;
+            if (digitRegex.test(password)) strength++;
+            if (specialCharRegex.test(password)) strength++;
+    
+            return strength;
+        }
+    
+        // Function to update password strength indicator
+        function updatePasswordStrengthIndicator() {
+            var password = document.getElementById("password").value;
+            var password_strength_indicator = document.getElementById("password_strength");
+    
+            // Calculate password strength
+            var strength = calculatePasswordStrength(password);
+    
+            // Determine strength level and update indicator text and color
+            if (strength == 0) {
+                password_strength_indicator.innerHTML = "";
+            } else if (strength == 1) {
+                password_strength_indicator.innerHTML = "Weak";
+                password_strength_indicator.style.color = "red";
+            } else if (strength == 2) {
+                password_strength_indicator.innerHTML = "Moderate";
+                password_strength_indicator.style.color = "orange";
+            } else if (strength == 3) {
+                password_strength_indicator.innerHTML = "Strong";
+                password_strength_indicator.style.color = "green";
+            } else if (strength >= 4) {
+                password_strength_indicator.innerHTML = "Very Strong";
+                password_strength_indicator.style.color = "darkgreen";
+            }
+        }
+    
+        // Function to check if passwords match
+        function checkPasswordsMatch() {
+            var password = document.getElementById("password").value;
+            var confirm_password = document.getElementById("confirm_password").value;
+            var password_match_message = document.getElementById("password_match_message");
+    
+            if (password !== confirm_password) {
+                password_match_message.innerHTML = "Passwords do not match.";
+                return false;
+            } else {
+                password_match_message.innerHTML = "";
+                return true;
+            }
+        }
+    
+        // Function to validate form on submission
+        function validateForm() {
+            var isPasswordMatch = checkPasswordsMatch();
+            return isPasswordMatch;
+        }
+    
+        // Add event listener to password field to update strength indicator as user types
+        document.getElementById("password").addEventListener("input", updatePasswordStrengthIndicator);
+    
+        // Add event listener to confirm password field to check if passwords match
+        document.getElementById("confirm_password").addEventListener("input", checkPasswordsMatch);
+    </script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+{% if prediction %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("https://i0.wp.com/tutvid.com/wp-content/uploads/2013/05/050113-01.jpg?resize=700%2C500");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .form-container {
+            margin-top: 50px;
+            background-color: rgba(247, 247, 247, 0); /* Transparent white */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        }
+        h2 {
+            color: rgb(18, 129, 156);
+            text-align: center;
+            font-weight: bold;
+        }
+        .form-group {
+            text-align: center;
+            color: rgb(100, 0, 0);
+            font-weight: bold;
+        }
+        h5 {
+            margin-top: 5%;
+        }
+        .form-control {
+            width: 400px;
+            margin: 0 auto;
+        }
+        .shadow-box {
+            margin-top: 45%;
+            box-shadow: 0 4px 8px rgba(122, 120, 120, 0.1); /* Adjust shadow properties as needed */
+            padding: 20px;
+            background-color: #f7ff8be1; /* Set background color */
+            border-radius: 10px; /* Add rounded corners */
+        }
+        .navbar {
+            backdrop-filter: blur(10px); /* Blur effect */
+            background-color: rgba(0, 0, 0, 0.05); /* Transparent white */
+            box-shadow: 0 4px 8px rgba(122, 120, 120, 0.1); /* Adjust shadow properties as needed */
+
+          }
+        
+          .navbar-brand {
+            font-weight: bold;
+            padding-left: 39%;
+            animation: colorChange 10s infinite alternate;
+        }
+        
+        @keyframes colorChange {
+            from {
+                color: black;
+                transform: translateX(-100%);
+            }
+            to {
+                color: rgb(100, 0, 0);
+                transform: translateX(0);
+            }
+        }
+        
+        
+        
+    </style>
+</head>
+<body>
+    
+        <nav class="navbar-expand-lg navbar-light  navbar">
+            <div class="container">
+            <h1 class="navbar-brand" href="#">Crop Yield Prediction Model</h1>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                    <a href="{% url 'home' %}">
+                    <button type="button" class="btn btn-primary mr-3">NEW-FORM</button>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{% url 'login' %}">
+                    <button type="button" class="btn btn-danger">LOGOUT</button>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+    <div class="container">       
+        <div class="row justify-content">
+            <div class="col-lg-6">
+                <div class="form-container">
+                    <h2 class="text-center">Form After Input Value</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="average_rain_fall">Average Rainfall (mm/year)</label>
+                            <input type="number" step="0.01" class="form-control" id="average_rain_fall" name="average_rain_fall" value="{{ average_rain_fall }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pesticides_tonnes">Pesticides (Tonnes)</label>
+                            <input type="number" step="0.01" class="form-control" id="pesticides_tonnes" name="pesticides_tonnes" value="{{ pesticides_tonnes }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="avg_temp">Average Temperature (°C)</label>
+                            <input type="number" step="0.01" class="form-control" id="avg_temp" name="avg_temp" value="{{ avg_temp }}"  required>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" class="form-control" id="countryname" name="countryname" value="{{ countryname }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item">Item</label>
+                            <input type="text" class="form-control" id="itemname" name="itemname" value="{{ itemname }}" required>
+                        </div>
+                    </form>
+                </div>   
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-4">
+                <div class="prediction-container shadow-box">
+                    <h1 style="text-align:center; color:rgb(100, 0, 0)">RESULT:</h1>
+                    <h3 style="text-align:center ; color:rgb(100, 0, 0)">Predicted Yield Value</h3>
+                    <p id="prediction" style="color:rgb(224, 37, 37) ; font-size:25px; text-align:center">={{ prediction }}</p>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+<!-- #------------------------------------------------------------ -->
+{% else %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("https://i0.wp.com/tutvid.com/wp-content/uploads/2013/05/050113-01.jpg?resize=700%2C500");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .form-container {
+            
+            background-color: rgba(247, 247, 247, 0); /* Transparent white */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        }
+        h2 {
+            color: rgb(18, 129, 156);
+            text-align: center;
+            font-weight: bold;
+        }
+        .form-group {
+            text-align: center;
+            color: rgb(100, 0, 0);
+            font-weight: bold;
+        }
+        h5 {
+            margin-top: 5%;
+        }
+        .form-control {
+            width: 400px;
+            margin: 0 auto;
+        }
+        .prediction-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            padding-left: 39%;
+            animation: colorChange 10s infinite alternate;
+        }
+        
+        @keyframes colorChange {
+            from {
+                color: black;
+                transform: translateX(-100%);
+            }
+            to {
+                color: rgb(100, 0, 0);
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar-expand-lg navbar-light  navbar">
+        <div class="container">
+        <h1 class="navbar-brand" href="#">Crop Yield Prediction Model</h1>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a href="{% url 'login' %}">
+                <button type="button" class="btn btn-danger">LOGOUT</button>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="form-container">
+                    <h2 class="text-center">Data Input Form</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="average_rain_fall">Average Rainfall (mm/year)</label>
+                            <input type="number" step="0.01" class="form-control" id="average_rain_fall" name="average_rain_fall" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pesticides_tonnes">Pesticides (Tonnes)</label>
+                            <input type="number" step="0.01" class="form-control" id="pesticides_tonnes" name="pesticides_tonnes" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="avg_temp">Average Temperature (°C)</label>
+                            <input type="number" step="0.01" class="form-control" id="avg_temp" name="avg_temp" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" class="form-control" id="countryname" name="countryname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item">Item</label>
+                            <input type="text" class="form-control" id="itemname" name="itemname" required>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endif %}

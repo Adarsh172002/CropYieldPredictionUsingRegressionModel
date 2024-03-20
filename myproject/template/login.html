@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+    body {
+        background-image: url("https://i0.wp.com/tutvid.com/wp-content/uploads/2013/05/050113-01.jpg?resize=700%2C500");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .form-wrapper {
+        background-color: rgba(255, 255, 255, 0.253); /* Adjust the opacity as needed */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Apply shadow effect */
+        margin-left: 10%;
+    }
+    h2 {
+        color: maroon;
+        text-align: center;
+        font-weight: bold;
+  
+            }
+      .form-group{
+          text-align: center;
+          color: brown;
+          font-weight: bold;
+      }
+      h5{
+        margin-top: 5%;
+      }
+      .form-control{
+        width: 300px;
+        margin: 0 auto;
+      }
+</style>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card form-wrapper">
+                    <div class="card-body">
+                        <h2 class="card-title">Login to Crop Yield Prediction</h2>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="username">USERNAME:</label>
+                                <input type="text" class="form-control" id="username" name="username" value="{{ username }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">PASSWORD:</label>
+                                <input type="password" class="form-control"  id="password" name="password">
+                            </div>
+                            {% if error_message %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error_message }}
+                                </div>
+                            {% endif %}
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-outline-success">LOGIN</button>
+                            </div>
+                            <div class="text-center">
+                                <h5>Don't have Accout
+                                <a href="{% url 'signup' %}">
+                                    <button type="button" class="btn btn-outline-primary">SIGN-UP</button>
+                                </a>
+                                </h5>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
